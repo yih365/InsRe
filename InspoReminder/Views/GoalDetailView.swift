@@ -18,6 +18,18 @@ struct GoalDetailView: View {
                 .padding(.horizontal)
                 
                 VStack(alignment: .leading, spacing: 8) {
+                    Text("Category")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                    Text(goal.category.rawValue)
+                        .font(.body)
+                        .padding(8)
+                        .background(Color.blue.opacity(0.1))
+                        .cornerRadius(8)
+                }
+                .padding(.horizontal)
+                
+                VStack(alignment: .leading, spacing: 8) {
                     Text("Motivation")
                         .font(.headline)
                         .foregroundColor(.gray)

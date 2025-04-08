@@ -5,6 +5,7 @@ import SwiftData
 final class Goal {
     var title: String
     var motivation: String
+    var category: GoalCategory
     @Relationship(deleteRule: .cascade) var inspirations: [Inspiration]
     var reminderInterval: Int?
     var reminderUnit: ReminderUnit
@@ -15,9 +16,10 @@ final class Goal {
         case weeks
     }
     
-    init(title: String, motivation: String) {
+    init(title: String, motivation: String, category: GoalCategory) {
         self.title = title
         self.motivation = motivation
+        self.category = category
         self.inspirations = []
         self.reminderUnit = .days
     }

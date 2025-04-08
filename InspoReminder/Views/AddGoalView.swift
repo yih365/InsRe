@@ -7,6 +7,7 @@ struct AddGoalView: View {
     
     @State private var title = ""
     @State private var motivation = ""
+    @State private var category: GoalCategory = .personalDevelopment
     @State private var inspirations: [Inspiration] = []
     
     var body: some View {
@@ -17,6 +18,18 @@ struct AddGoalView: View {
                         .font(.headline)
                     TextField("Enter goal title", text: $title)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+                .padding(.horizontal)
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Category")
+                        .font(.headline)
+                    Picker("Category", selection: $category) {
+                        ForEach(GoalCategory.allCases, id: \.self) { category in
+                            Text(category.rawValue).tag(category)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
                 }
                 .padding(.horizontal)
                 
@@ -82,7 +95,7 @@ struct AddGoalView: View {
         .navigationTitle("New Goal")
         .navigationBarItems(
             trailing: Button("Save") {
-                let goal = Goal(title: title, motivation: motivation)
+                let goal = Goal(title: title, motivation: motivation, category: category)
                 goal.inspirations = inspirations
                 modelContext.insert(goal)
                 dismiss()
