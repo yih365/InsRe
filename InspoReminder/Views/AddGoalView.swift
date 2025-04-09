@@ -54,43 +54,19 @@ struct AddGoalView: View {
                         .padding(.horizontal)
                     
                     if !inspirations.isEmpty {
-                        ForEach(inspirations) { inspiration in
-                            HStack {
-                                switch inspiration.type {
-                                case .text:
-                                    Text(inspiration.content)
-                                        .padding()
-                                        .background(Color.gray.opacity(0.1))
-                                        .cornerRadius(8)
-                                case .link:
-                                    Link(inspiration.content, destination: URL(string: inspiration.content) ?? URL(string: "https://apple.com")!)
-                                        .padding()
-                                        .background(Color.blue.opacity(0.1))
-                                        .cornerRadius(8)
-                                case .image:
-                                    if let data = Data(base64Encoded: inspiration.content),
-                                       let uiImage = UIImage(data: data) {
-                                        Image(uiImage: uiImage)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(maxHeight: 200)
-                                            .cornerRadius(8)
-                                    }
-                                }
-                                
-                                Spacer()
-                                
-                                Button(action: {
+                        GeometryReader { geometry in
+                            let squareSize = geometry.size.width / 2 - 30
+                            InspirationListView(
+                                inspirations: inspirations,
+                                onDelete: { inspiration in
                                     if let index = inspirations.firstIndex(where: { $0.id == inspiration.id }) {
                                         inspirations.remove(at: index)
                                     }
-                                }) {
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.red)
-                                }
-                            }
-                            .padding(.horizontal)
+                                },
+                                squareSize: squareSize
+                            )
                         }
+                        .padding(.horizontal)
                     }
                 }
             }

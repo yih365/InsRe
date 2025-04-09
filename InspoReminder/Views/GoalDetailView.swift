@@ -54,40 +54,16 @@ struct GoalDetailView: View {
                                 .font(.headline)
                                 .foregroundColor(.gray)
                             
-                            ForEach(goal.inspirations) { inspiration in
-                                switch inspiration.type {
-                                case .text:
-                                    Text(inspiration.content)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding()
-                                        .background(Color.gray.opacity(0.1))
-                                        .cornerRadius(8)
-                                case .link:
-                                    Link(inspiration.content, destination: URL(string: inspiration.content) ?? URL(string: "https://apple.com")!)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding()
-                                        .background(Color.blue.opacity(0.1))
-                                        .cornerRadius(8)
-                                case .image:
-                                    if let data = Data(base64Encoded: inspiration.content),
-                                       let uiImage = UIImage(data: data) {
-                                        Image(uiImage: uiImage)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .frame(maxHeight: 200)
-                                            .cornerRadius(8)
-                                    }
-                                }
-                                
-                                Button(action: {
-                                    inspirationToDelete = inspiration
-                                    showingDeleteAlert = true
-                                }) {
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.red)
-                                        .padding(.leading, 8)
-                                }
+                            GeometryReader { geometry in
+                                let squareSize = geometry.size.width / 2 - 30
+                                InspirationListView(
+                                    inspirations: goal.inspirations,
+                                    onDelete: { inspiration in
+                                        inspirationToDelete = inspiration
+                                        showingDeleteAlert = true
+                                    },
+                                    squareSize: squareSize
+                                )
                             }
                         }
                         .padding(.horizontal, 20)
