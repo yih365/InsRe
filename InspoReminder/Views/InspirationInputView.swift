@@ -8,7 +8,7 @@ struct InspirationInputView: View {
     @State private var newLink = ""
     
     var body: some View {
-        Section(header: Text("Inspirations")) {
+        Section() {
             HStack {
                 TextField("Add text inspiration", text: $newText)
                 Button("Add") {

@@ -24,12 +24,16 @@ struct AddGoalView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Category")
                         .font(.headline)
-                    Picker("Category", selection: $category) {
-                        ForEach(GoalCategory.allCases, id: \.self) { category in
-                            Text(category.rawValue).tag(category)
+                    HStack {
+                        Picker("Category", selection: $category) {
+                            ForEach(GoalCategory.allCases, id: \.self) { category in
+                                Text(category.rawValue).tag(category)
+                            }
                         }
+                        .pickerStyle(MenuPickerStyle())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer()
                     }
-                    .pickerStyle(MenuPickerStyle())
                 }
                 .padding(.horizontal)
                 
