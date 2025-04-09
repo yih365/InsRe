@@ -4,7 +4,10 @@ import SwiftData
 struct GoalDetailView: View {
     @Bindable var goal: Goal
     @State private var showingReminderSettings = false
-    @State private var showingInspirationInput = false
+    @State private var showingMenu = false
+    @State private var showingTextInput = false
+    @State private var showingLinkInput = false
+    @State private var showingImageInput = false
     @State private var inspirationToDelete: Inspiration?
     @State private var showingDeleteAlert = false
     
@@ -97,9 +100,17 @@ struct GoalDetailView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Button(action: {
-                        showingInspirationInput = true
-                    }) {
+                    Menu {
+                        Button(action: { showingTextInput = true }) {
+                            Label("Add Text", systemImage: "text.quote")
+                        }
+                        Button(action: { showingLinkInput = true }) {
+                            Label("Add Link", systemImage: "link")
+                        }
+                        Button(action: { showingImageInput = true }) {
+                            Label("Add Image", systemImage: "photo")
+                        }
+                    } label: {
                         Image(systemName: "plus")
                             .font(.title2)
                             .foregroundColor(.white)
@@ -134,17 +145,100 @@ struct GoalDetailView: View {
         .sheet(isPresented: $showingReminderSettings) {
             ReminderSettingsView(goal: goal)
         }
-        .sheet(isPresented: $showingInspirationInput) {
+        .sheet(isPresented: $showingTextInput) {
             NavigationView {
-                InspirationInputView(inspirations: .init(
-                    get: { goal.inspirations },
-                    set: { goal.inspirations = $0 }
-                ))
-                .navigationTitle("Add Inspiration")
-                .navigationBarItems(trailing: Button("Done") {
-                    showingInspirationInput = false
-                })
+                TextInspirationView(inspirations: $goal.inspirations, isPresented: $showingTextInput)
+                    .navigationTitle("Add Text")
             }
+        }
+        .sheet(isPresented: $showingLinkInput) {
+            NavigationView {
+                LinkInspirationView(inspirations: $goal.inspirations, isPresented: $showingLinkInput)
+                    .navigationTitle("Add Link")
+            }
+        }
+        .sheet(isPresented: $showingImageInput) {
+            NavigationView {
+                ImageInspirationView(inspirations: $goal.inspirations)
+                    .navigationTitle("Add Image")
+                    .navigationBarItems(trailing: Button("Done") {
+                        showingImageInput = false
+                    })
+            }
+        }
+    }
+}
+
+struct ImageInspirationView: View {
+    @Binding var inspirations: [Inspiration]
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        ImagePicker(inspirations: $inspirations)
+            .ignoresSafeArea()
+            .onAppear {
+                // Dismiss the view after image is selected
+                if inspirations.last?.type == .image {
+                    dismiss()
+                }
+            }
+    }
+}
+
+struct TextInspirationView: View {
+    @Binding var inspirations: [Inspiration]
+    @State private var text = ""
+    @Environment(\.dismiss) private var dismiss
+    @Binding var isPresented: Bool
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            TextField("Enter your inspiration", text: $text, axis: .vertical)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            Button("Add") {
+                if !text.isEmpty {
+                    inspirations.append(Inspiration(type: .text, content: text))
+                    isPresented = false
+                    dismiss()
+                }
+            }
+            .disabled(text.isEmpty)
+            .buttonStyle(.borderedProminent)
+            .padding()
+            
+            Spacer()
+        }
+    }
+}
+
+struct LinkInspirationView: View {
+    @Binding var inspirations: [Inspiration]
+    @State private var link = ""
+    @Environment(\.dismiss) private var dismiss
+    @Binding var isPresented: Bool
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            TextField("Enter URL", text: $link)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .keyboardType(.URL)
+                .autocapitalization(.none)
+                .padding()
+            
+            Button("Add") {
+                if !link.isEmpty {
+                    inspirations.append(Inspiration(type: .link, content: link))
+                    isPresented = false
+                    dismiss()
+                }
+            }
+            .disabled(link.isEmpty)
+            .buttonStyle(.borderedProminent)
+            .padding()
+            
+            Spacer()
         }
     }
 }
