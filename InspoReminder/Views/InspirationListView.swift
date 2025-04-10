@@ -104,10 +104,21 @@ struct InspirationListView: View {
     let onFavorite: (Inspiration) -> Void
     let squareSize: CGFloat = 150
     
+    var sortedInspirations: [Inspiration] {
+        inspirations.sorted { first, second in
+            if first.isFavorite && !second.isFavorite {
+                return true
+            } else if !first.isFavorite && second.isFavorite {
+                return false
+            }
+            return false
+        }
+    }
+    
     var body: some View {
         let columns = [GridItem(.flexible()), GridItem(.flexible())]
         LazyVGrid(columns: columns, spacing: 20) {
-            ForEach(inspirations) { inspiration in
+            ForEach(sortedInspirations) { inspiration in
                 InspirationCell(
                     inspiration: inspiration,
                     squareSize: squareSize,
