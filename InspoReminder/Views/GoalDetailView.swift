@@ -10,6 +10,7 @@ struct GoalDetailView: View {
     @State private var showingImageInput = false
     @State private var inspirationToDelete: Inspiration?
     @State private var showingDeleteAlert = false
+    @State private var inspirationViewMode: InspirationType = .grid
     
     var body: some View {
         ZStack {
@@ -50,20 +51,62 @@ struct GoalDetailView: View {
                     
                     if !goal.inspirations.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("Inspirations")
-                                .font(.headline)
-                                .foregroundColor(.gray)
-                            
-                            GeometryReader { geometry in
-                                InspirationListView(
-                                    inspirations: goal.inspirations,
-                                    onDelete: { inspiration in
-                                        inspirationToDelete = inspiration
-                                        showingDeleteAlert = true
-                                    }
-                                )
+                            HStack {
+                                Text("Inspirations")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                Spacer()
+                                Picker("View Mode", selection: $inspirationViewMode) {
+                                    Image(systemName: "square.grid.2x2").tag(InspirationType.grid)
+                                    Image(systemName: "list.bullet").tag(InspirationType.list)
+                                }
+                                .pickerStyle(.segmented)
+                                .frame(width: 100)
                             }
-                            .frame(height: CGFloat(ceil(Double(goal.inspirations.count) / 2.0)) * 200)
+                            
+                            switch inspirationViewMode {
+                            case .grid:
+                                GeometryReader { geometry in
+                                    InspirationListView(
+                                        inspirations: goal.inspirations,
+                                        onDelete: { inspiration in
+                                            inspirationToDelete = inspiration
+                                            showingDeleteAlert = true
+                                        }
+                                    )
+                                }
+                                .frame(height: CGFloat(ceil(Double(goal.inspirations.count) / 2.0)) * 200)
+                            case .list:
+                                VStack(spacing: 20) {
+                                    InspirationCarouselView(
+                                        inspirations: goal.inspirations,
+                                        title: "Images",
+                                        onDelete: { inspiration in
+                                            inspirationToDelete = inspiration
+                                            showingDeleteAlert = true
+                                        }
+                                    )
+                                    
+                                    InspirationCarouselView(
+                                        inspirations: goal.inspirations,
+                                        title: "Text",
+                                        onDelete: { inspiration in
+                                            inspirationToDelete = inspiration
+                                            showingDeleteAlert = true
+                                        }
+                                    )
+                                    
+                                    InspirationCarouselView(
+                                        inspirations: goal.inspirations,
+                                        title: "Links",
+                                        onDelete: { inspiration in
+                                            inspirationToDelete = inspiration
+                                            showingDeleteAlert = true
+                                        }
+                                    )
+                                }
+                                EmptyView() // Placeholder for the list view
+                            }
                         }
                         .padding(.horizontal, 20)
                     }
@@ -224,5 +267,9 @@ struct LinkInspirationView: View {
             Spacer()
         }
     }
+}
+
+private enum InspirationType {
+    case grid, list
 }
                         

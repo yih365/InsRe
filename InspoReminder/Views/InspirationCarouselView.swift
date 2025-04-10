@@ -1,0 +1,44 @@
+import SwiftUI
+
+struct InspirationCarouselView: View {
+    let inspirations: [Inspiration]
+    let title: String
+    let onDelete: (Inspiration) -> Void
+    
+    var filteredInspirations: [Inspiration] {
+        switch title {
+        case "Images":
+            return inspirations.filter { $0.type == .image }
+        case "Text":
+            return inspirations.filter { $0.type == .text }
+        case "Links":
+            return inspirations.filter { $0.type == .link }
+        default:
+            return []
+        }
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {  // Added spacing parameter
+            if !filteredInspirations.isEmpty {
+                Text(title)
+                    .font(.headline)
+                    .padding(.horizontal)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 20) {
+                        ForEach(filteredInspirations) { inspiration in
+                            VStack {
+                                InspirationCell(inspiration: inspiration, squareSize: 150, onDelete: onDelete)
+                            }
+                            .frame(width: 180)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                .frame(height: 200)
+                .background(Color.gray.opacity(0.1))
+            }
+        }
+    }
+}
