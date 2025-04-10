@@ -72,6 +72,9 @@ struct GoalDetailView: View {
                                         onDelete: { inspiration in
                                             inspirationToDelete = inspiration
                                             showingDeleteAlert = true
+                                        },
+                                        onFavorite: { inspiration in
+                                            inspiration.isFavorite.toggle()
                                         }
                                     )
                                 }
@@ -84,6 +87,9 @@ struct GoalDetailView: View {
                                         onDelete: { inspiration in
                                             inspirationToDelete = inspiration
                                             showingDeleteAlert = true
+                                        },
+                                        onFavorite: { inspiration in
+                                            inspiration.isFavorite.toggle()
                                         }
                                     )
                                     
@@ -93,6 +99,9 @@ struct GoalDetailView: View {
                                         onDelete: { inspiration in
                                             inspirationToDelete = inspiration
                                             showingDeleteAlert = true
+                                        },
+                                        onFavorite: { inspiration in
+                                            inspiration.isFavorite.toggle()
                                         }
                                     )
                                     
@@ -102,6 +111,9 @@ struct GoalDetailView: View {
                                         onDelete: { inspiration in
                                             inspirationToDelete = inspiration
                                             showingDeleteAlert = true
+                                        },
+                                        onFavorite: { inspiration in
+                                            inspiration.isFavorite.toggle()
                                         }
                                     )
                                 }

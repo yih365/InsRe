@@ -11,9 +11,11 @@ final class Inspiration {
     
     var type: InspirationType
     var content: String
+    var isFavorite: Bool
     
-    init(type: InspirationType, content: String) {
+    init(type: InspirationType, content: String, isFavorite: Bool = false) {
         self.type = type
         self.content = content
+        self.isFavorite = isFavorite
     }
 }

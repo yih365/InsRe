@@ -4,6 +4,7 @@ struct InspirationCell: View {
     let inspiration: Inspiration
     let squareSize: CGFloat?
     let onDelete: (Inspiration) -> Void
+    let onFavorite: (Inspiration) -> Void
     @State private var showingDetail = false
     
     var body: some View {
@@ -79,10 +80,20 @@ struct InspirationCell: View {
             }
             .frame(width: squareSize, height: squareSize)
             
-            Button(action: { onDelete(inspiration) }) {
-                Image(systemName: "trash")
-                    .foregroundColor(.red)
+            HStack {
+                Button(action: { onDelete(inspiration) }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                }
+                
+                Spacer()
+                
+                Button(action: { onFavorite(inspiration) }) {
+                    Image(systemName: inspiration.isFavorite ? "heart.fill" : "heart")
+                        .foregroundColor(.red)
+                }
             }
+            .padding(.horizontal)
         }
     }
 }
@@ -90,26 +101,32 @@ struct InspirationCell: View {
 struct InspirationListView: View {
     let inspirations: [Inspiration]
     let onDelete: (Inspiration) -> Void
-    let squareSize: CGFloat = 150  // Fixed size instead of parameter
-    
-    init(inspirations: [Inspiration], onDelete: @escaping (Inspiration) -> Void, squareSize: CGFloat = 200) {
-        self.inspirations = inspirations
-        self.onDelete = onDelete
-    }
+    let onFavorite: (Inspiration) -> Void
+    let squareSize: CGFloat = 150
     
     var body: some View {
         let columns = [GridItem(.flexible()), GridItem(.flexible())]
         LazyVGrid(columns: columns, spacing: 20) {
             ForEach(inspirations) { inspiration in
-                InspirationCell(inspiration: inspiration, squareSize: squareSize, onDelete: onDelete)
+                InspirationCell(
+                    inspiration: inspiration,
+                    squareSize: squareSize,
+                    onDelete: onDelete,
+                    onFavorite: { inspiration in
+                        if let index = inspirations.firstIndex(where: { $0.id == inspiration.id }) {
+                            inspirations[index].isFavorite.toggle()
+                        }
+                    }
+                )
             }
         }
         .frame(minHeight: getListHeight())
     }
-
+    
     private func getListHeight() -> CGFloat {
         let rows = CGFloat(ceil(Double(inspirations.count) / 2.0))
         let height = rows * (squareSize + 60)
         return height
     }
 }
+

@@ -78,6 +78,11 @@ struct AddGoalView: View {
                                     if let index = inspirations.firstIndex(where: { $0.id == inspiration.id }) {
                                         inspirations.remove(at: index)
                                     }
+                                },
+                                onFavorite: { inspiration in
+                                    if let index = inspirations.firstIndex(where: { $0.id == inspiration.id }) {
+                                        inspirations[index].isFavorite.toggle()
+                                    }
                                 }
                             )
                         }

@@ -4,6 +4,7 @@ struct InspirationCarouselView: View {
     let inspirations: [Inspiration]
     let title: String
     let onDelete: (Inspiration) -> Void
+    let onFavorite: (Inspiration) -> Void
     
     var filteredInspirations: [Inspiration] {
         switch title {
@@ -29,7 +30,16 @@ struct InspirationCarouselView: View {
                     LazyHStack(spacing: 20) {
                         ForEach(filteredInspirations) { inspiration in
                             VStack {
-                                InspirationCell(inspiration: inspiration, squareSize: 150, onDelete: onDelete)
+                                InspirationCell(
+                                    inspiration: inspiration,
+                                    squareSize: 150,
+                                    onDelete: onDelete,
+                                    onFavorite: { inspiration in
+                                        if let index = inspirations.firstIndex(where: { $0.id == inspiration.id }) {
+                                            inspirations[index].isFavorite.toggle()
+                                        }
+                                    }
+                                )
                             }
                             .frame(width: 180)
                         }
