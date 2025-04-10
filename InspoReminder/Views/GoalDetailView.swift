@@ -195,6 +195,13 @@ struct LinkInspirationView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var isPresented: Bool
     
+    private func formatURL(_ urlString: String) -> String {
+        if !urlString.lowercased().hasPrefix("http://") && !urlString.lowercased().hasPrefix("https://") {
+            return "https://" + urlString
+        }
+        return urlString
+    }
+    
     var body: some View {
         VStack(spacing: 20) {
             TextField("Enter URL", text: $link)
@@ -205,7 +212,8 @@ struct LinkInspirationView: View {
             
             Button("Add") {
                 if !link.isEmpty {
-                    inspirations.append(Inspiration(type: .link, content: link))
+                    let formattedLink = formatURL(link)
+                    inspirations.append(Inspiration(type: .link, content: formattedLink))
                     isPresented = false
                     dismiss()
                 }

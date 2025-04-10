@@ -43,11 +43,23 @@ private struct InspirationCell: View {
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(15)
             case .link:
-                Link(inspiration.content, destination: URL(string: inspiration.content) ?? URL(string: "https://apple.com")!)
-                    .frame(width: squareSize, height: squareSize)
-                    .padding()
-                    .background(Color.blue.opacity(0.1))
-                    .cornerRadius(15)
+                                if let url = URL(string: inspiration.content),
+                                   UIApplication.shared.canOpenURL(url) {
+                                    Link(destination: url) {
+                                        Text(url.host ?? inspiration.content)
+                                            .lineLimit(2)
+                                            .frame(width: squareSize, height: squareSize)
+                                            .padding()
+                                            .background(Color.blue.opacity(0.1))
+                                            .cornerRadius(15)
+                                    }
+                                } else {
+                                    Text("Invalid URL")
+                                        .frame(width: squareSize, height: squareSize)
+                                        .padding()
+                                        .background(Color.red.opacity(0.1))
+                                        .cornerRadius(15)
+                                }
             case .image:
                 if let data = Data(base64Encoded: inspiration.content),
                    let uiImage = UIImage(data: data) {
