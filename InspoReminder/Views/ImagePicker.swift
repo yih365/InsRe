@@ -1,44 +1,6 @@
 import SwiftUI
 import PhotosUI
 
-struct InspirationInputView: View {
-    @Binding var inspirations: [Inspiration]
-    @State private var showingImagePicker = false
-    @State private var newText = ""
-    @State private var newLink = ""
-    
-    var body: some View {
-        Section() {
-            HStack {
-                TextField("Add text inspiration", text: $newText)
-                Button("Add") {
-                    if !newText.isEmpty {
-                        inspirations.append(Inspiration(type: .text, content: newText))
-                        newText = ""
-                    }
-                }
-            }
-            
-            HStack {
-                TextField("Add link inspiration", text: $newLink)
-                Button("Add") {
-                    if !newLink.isEmpty {
-                        inspirations.append(Inspiration(type: .link, content: newLink))
-                        newLink = ""
-                    }
-                }
-            }
-            
-            Button("Add Image") {
-                showingImagePicker = true
-            }
-        }
-        .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(inspirations: $inspirations)
-        }
-    }
-}
-
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var inspirations: [Inspiration]
     @Environment(\.dismiss) private var dismiss

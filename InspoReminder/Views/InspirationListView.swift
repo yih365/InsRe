@@ -3,22 +3,28 @@ import SwiftUI
 struct InspirationListView: View {
     let inspirations: [Inspiration]
     let onDelete: (Inspiration) -> Void
-    let squareSize: CGFloat?
+    let squareSize: CGFloat = 150  // Fixed size instead of parameter
     
-    init(inspirations: [Inspiration], onDelete: @escaping (Inspiration) -> Void, squareSize: CGFloat? = nil) {
+    init(inspirations: [Inspiration], onDelete: @escaping (Inspiration) -> Void, squareSize: CGFloat = 200) {
         self.inspirations = inspirations
         self.onDelete = onDelete
-        self.squareSize = squareSize
     }
     
     var body: some View {
         let columns = [GridItem(.flexible()), GridItem(.flexible())]
         LazyVGrid(columns: columns, spacing: 20) {
             ForEach(inspirations) { inspiration in
-                InspirationCell(inspiration: inspiration, squareSize: squareSize!, onDelete: onDelete)
+                InspirationCell(inspiration: inspiration, squareSize: squareSize, onDelete: onDelete)
             }
         }
-        .frame(minHeight: CGFloat(ceil(Double(inspirations.count) / 2.0)) * ((squareSize ?? 0) + 60))
+        .frame(minHeight: getListHeight())
+    }
+
+    private func getListHeight() -> CGFloat {
+        let rows = CGFloat(ceil(Double(inspirations.count) / 2.0))
+        let height = rows * (squareSize + 60)
+        print("List height: \(height)")
+        return height
     }
 }
 

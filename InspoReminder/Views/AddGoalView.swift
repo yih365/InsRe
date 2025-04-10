@@ -72,15 +72,13 @@ struct AddGoalView: View {
                     
                     if !inspirations.isEmpty {
                         GeometryReader { geometry in
-                            let squareSize = geometry.size.width / 2 - 30
                             InspirationListView(
                                 inspirations: inspirations,
                                 onDelete: { inspiration in
                                     if let index = inspirations.firstIndex(where: { $0.id == inspiration.id }) {
                                         inspirations.remove(at: index)
                                     }
-                                },
-                                squareSize: squareSize
+                                }
                             )
                         }
                         .padding(.horizontal)

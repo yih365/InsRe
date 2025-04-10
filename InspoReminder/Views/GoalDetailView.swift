@@ -55,16 +55,15 @@ struct GoalDetailView: View {
                                 .foregroundColor(.gray)
                             
                             GeometryReader { geometry in
-                                let squareSize = geometry.size.width / 2 - 30
                                 InspirationListView(
                                     inspirations: goal.inspirations,
                                     onDelete: { inspiration in
                                         inspirationToDelete = inspiration
                                         showingDeleteAlert = true
-                                    },
-                                    squareSize: squareSize
+                                    }
                                 )
                             }
+                            .frame(height: CGFloat(ceil(Double(goal.inspirations.count) / 2.0)) * 200)
                         }
                         .padding(.horizontal, 20)
                     }
@@ -226,3 +225,4 @@ struct LinkInspirationView: View {
         }
     }
 }
+                        
