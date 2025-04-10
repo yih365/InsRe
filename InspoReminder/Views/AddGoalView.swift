@@ -9,6 +9,9 @@ struct AddGoalView: View {
     @State private var motivation = ""
     @State private var category: GoalCategory = .personalDevelopment
     @State private var inspirations: [Inspiration] = []
+    @State private var showingTextInput = false
+    @State private var showingLinkInput = false
+    @State private var showingImageInput = false
     
     var body: some View {
         ScrollView {
@@ -46,12 +49,26 @@ struct AddGoalView: View {
                 .padding(.horizontal)
                 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Inspirations")
-                        .font(.headline)
-                        .padding(.horizontal)
-                    
-                    InspirationInputView(inspirations: $inspirations)
-                        .padding(.horizontal)
+                    HStack {
+                        Text("Inspirations")
+                            .font(.headline)
+                        
+                        Menu {
+                            Button(action: { showingTextInput = true }) {
+                                Label("Add Text", systemImage: "text.quote")
+                            }
+                            Button(action: { showingLinkInput = true }) {
+                                Label("Add Link", systemImage: "link")
+                            }
+                            Button(action: { showingImageInput = true }) {
+                                Label("Add Image", systemImage: "photo")
+                            }
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                    .padding(.horizontal)
                     
                     if !inspirations.isEmpty {
                         GeometryReader { geometry in
@@ -82,5 +99,26 @@ struct AddGoalView: View {
             }
             .disabled(title.isEmpty || motivation.isEmpty)
         )
+        .sheet(isPresented: $showingTextInput) {
+            NavigationView {
+                TextInspirationView(inspirations: $inspirations, isPresented: $showingTextInput)
+                    .navigationTitle("Add Text")
+            }
+        }
+        .sheet(isPresented: $showingLinkInput) {
+            NavigationView {
+                LinkInspirationView(inspirations: $inspirations, isPresented: $showingLinkInput)
+                    .navigationTitle("Add Link")
+            }
+        }
+        .sheet(isPresented: $showingImageInput) {
+            NavigationView {
+                ImageInspirationView(inspirations: $inspirations)
+                    .navigationTitle("Add Image")
+                    .navigationBarItems(trailing: Button("Done") {
+                        showingImageInput = false
+                    })
+            }
+        }
     }
 }
