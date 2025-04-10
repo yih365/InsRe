@@ -26,12 +26,7 @@ private struct InspirationCell: View {
     let inspiration: Inspiration
     let squareSize: CGFloat?
     let onDelete: (Inspiration) -> Void
-    
-    init(inspiration: Inspiration, squareSize: CGFloat? = nil, onDelete: @escaping (Inspiration) -> Void) {
-        self.inspiration = inspiration
-        self.squareSize = squareSize
-        self.onDelete = onDelete
-    }
+    @State private var showingDetail = false
     
     var body: some View {
         VStack {
@@ -42,6 +37,21 @@ private struct InspirationCell: View {
                     .padding()
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(15)
+                    .onTapGesture {
+                        showingDetail = true
+                    }
+                    .sheet(isPresented: $showingDetail) {
+                        NavigationView {
+                            ScrollView {
+                                Text(inspiration.content)
+                                    .padding()
+                            }
+                            .navigationTitle("Text Inspiration")
+                            .navigationBarItems(trailing: Button("Done") {
+                                showingDetail = false
+                            })
+                        }
+                    }
             case .link:
                                 if let url = URL(string: inspiration.content),
                                    UIApplication.shared.canOpenURL(url) {
@@ -69,6 +79,20 @@ private struct InspirationCell: View {
                         .frame(width: squareSize, height: squareSize)
                         .clipped()
                         .cornerRadius(15)
+                        .onTapGesture {
+                            showingDetail = true
+                        }
+                        .sheet(isPresented: $showingDetail) {
+                            NavigationView {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .navigationTitle("Image Inspiration")
+                                    .navigationBarItems(trailing: Button("Done") {
+                                        showingDetail = false
+                                    })
+                            }
+                        }
                 }
             }
             
