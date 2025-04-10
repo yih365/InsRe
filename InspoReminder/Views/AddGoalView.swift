@@ -86,6 +86,7 @@ struct AddGoalView: View {
                                 }
                             )
                         }
+                        .frame(height: CGFloat(ceil(Double(inspirations.count) / 2.0)) * 200)
                         .padding(.horizontal)
                     }
                 }
