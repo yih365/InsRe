@@ -11,21 +11,41 @@ struct GoalOverviewView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List {
-                    ForEach(GoalCategory.allCases, id: \.self) { category in
-                        if let goalsInCategory = groupedGoals[category], !goalsInCategory.isEmpty {
-                            Section(header: Text(category.rawValue)) {
-                                ForEach(goalsInCategory) { goal in
-                                    NavigationLink(destination: GoalDetailView(goal: goal)) {
-                                        VStack(alignment: .leading) {
-                                            Text(goal.title)
-                                                .font(.headline)
-                                            Text(goal.motivation)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
+                if goals.isEmpty {
+                    VStack {
+                        Text("Add a goal to start.")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                    }
+                } else {
+                    List {
+                        ForEach(GoalCategory.allCases, id: \.self) { category in
+                            if let goalsInCategory = groupedGoals[category], !goalsInCategory.isEmpty {
+                                Section {
+                                    ForEach(goalsInCategory) { goal in
+                                        NavigationLink(destination: GoalDetailView(goal: goal)) {
+                                            VStack(alignment: .leading) {
+                                                Text(goal.title)
+                                                    .font(.headline)
+                                                Text(goal.motivation)
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.gray)
+                                            }
                                         }
                                     }
+                                } header: {
+                                    HStack {
+                                        Text(category.rawValue)
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                        Spacer()
+                                    }
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal)
+                                    .background(Color.black)
+                                    .listRowInsets(EdgeInsets())
                                 }
+                                .listSectionSeparator(.hidden)
                             }
                         }
                     }

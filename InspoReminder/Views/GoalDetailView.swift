@@ -16,45 +16,44 @@ struct GoalDetailView: View {
         ZStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Title")
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                        Text(goal.title)
-                            .font(.title2)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(.horizontal, 20)
+                    Text(goal.title)
+                        .font(.title2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 20)
                     
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Category")
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                        Text(goal.category.rawValue)
-                            .font(.body)
-                            .padding(8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color.blue.opacity(0.1))
-                            .cornerRadius(8)
-                    }
-                    .padding(.horizontal, 20)
+                    Text(goal.category.rawValue)
+                        .font(.body)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 20)
+                        .background(Color(red: 0.7, green: 0.5, blue: 0.8))
+                        .cornerRadius(10)
+                        .padding(.horizontal, 20)
                     
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Motivation")
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                        Text(goal.motivation)
-                            .font(.body)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(.horizontal, 20)
+                    Text(goal.motivation)
+                        .font(.body)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 20)
+                        .background(Color(red: 0.5, green: 0.7, blue: 0.5))
+                        .cornerRadius(10)
+                        .padding(.horizontal, 20)
+                    
+                    Divider()
+                        .padding(.horizontal, 20)
                     
                     if !goal.inspirations.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack {
                                 Text("Inspirations")
                                     .font(.headline)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 20)
+                                    .background(Color.black)
+                                    .cornerRadius(10)
                                 Spacer()
                                 Picker("View Mode", selection: $inspirationViewMode) {
                                     Image(systemName: "square.grid.2x2").tag(InspirationType.grid)
@@ -63,6 +62,8 @@ struct GoalDetailView: View {
                                 .pickerStyle(.segmented)
                                 .frame(width: 100)
                             }
+                            .padding(.horizontal, 20)
+                            .background(Color.white)
                             
                             switch inspirationViewMode {
                             case .grid:

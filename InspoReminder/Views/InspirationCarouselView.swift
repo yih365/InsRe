@@ -26,6 +26,9 @@ struct InspirationCarouselView: View {
                     .font(.headline)
                     .padding(.horizontal)
                 
+                Divider()
+                    .padding(.horizontal)
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: 20) {
                         ForEach(filteredInspirations) { inspiration in
@@ -47,6 +50,10 @@ struct InspirationCarouselView: View {
                     .padding(.horizontal)
                 }
                 .frame(height: 200)
+                .background(Color.white)
+                
+                Divider()
+                    .padding(.horizontal)
                 .background(Color.gray.opacity(0.1))
             }
         }

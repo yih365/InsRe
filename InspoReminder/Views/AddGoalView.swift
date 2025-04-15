@@ -43,13 +43,14 @@ struct AddGoalView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Motivation/Reason")
                         .font(.headline)
-                    TextField("Why do you want to achieve this?", text: $motivation)
+                    TextField("Why do you want to achieve this?", text: $motivation, axis: .vertical)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .lineLimit(1...5)
                 }
                 .padding(.horizontal)
                 
                 VStack(alignment: .leading, spacing: 12) {
-                    HStack {
+                    HStack(alignment: .center, spacing: 8) {
                         Text("Inspirations")
                             .font(.headline)
                         
@@ -67,6 +68,8 @@ struct AddGoalView: View {
                             Image(systemName: "plus.circle.fill")
                                 .foregroundColor(.blue)
                         }
+                        
+                        Spacer()
                     }
                     .padding(.horizontal)
                     
