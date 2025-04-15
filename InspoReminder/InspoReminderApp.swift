@@ -15,7 +15,17 @@ struct InspoReminderApp: App {
     
     var body: some Scene {
         WindowGroup {
-            GoalOverviewView()
+            TabView {
+                GoalOverviewView()
+                    .tabItem {
+                        Label("Goals", systemImage: "target")
+                    }
+                
+                InspirationGalleryView()
+                    .tabItem {
+                        Label("All Inspirations", systemImage: "sparkles")
+                    }
+            }
         }
         .modelContainer(container)
     }
