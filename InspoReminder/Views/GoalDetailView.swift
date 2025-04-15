@@ -11,7 +11,11 @@ struct GoalDetailView: View {
     @State private var inspirationToDelete: Inspiration?
     @State private var showingDeleteAlert = false
     @State private var inspirationViewMode: InspirationType = .grid
-    
+    @State private var showingEditSheet = false
+    @State private var showingDeleteGoalAlert = false
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         ZStack {
             ScrollView {
@@ -166,13 +170,56 @@ struct GoalDetailView: View {
         }
         .navigationTitle("Goal Details")
         .navigationBarItems(
-            trailing: Button(action: {
-                showingReminderSettings = true
-            }) {
-                Image(systemName: "bell.circle")
-                    .font(.title2)
+            trailing: HStack {
+                Button(action: {
+                    showingReminderSettings = true
+                }) {
+                    Image(systemName: "bell.circle")
+                        .font(.title2)
+                }
+                
+                Button(action: {
+                    showingEditSheet = true
+                }) {
+                    Image(systemName: "gear")
+                        .font(.title2)
+                }
             }
         )
+        .sheet(isPresented: $showingEditSheet) {
+            NavigationView {
+                Form {
+                    TextField("Title", text: $goal.title)
+                    Picker("Category", selection: $goal.category) {
+                        ForEach(GoalCategory.allCases, id: \.self) { category in
+                            Text(category.rawValue).tag(category)
+                        }
+                    }
+                    TextField("Motivation", text: $goal.motivation, axis: .vertical)
+                        .lineLimit(1...5)
+                    
+                    Section {
+                        Button("Delete Goal", role: .destructive) {
+                            showingDeleteGoalAlert = true
+                        }
+                    }
+                }
+                .navigationTitle("Edit Goal")
+                .navigationBarItems(trailing: Button("Done") {
+                    showingEditSheet = false
+                })
+            }
+        }
+        .alert("Delete Goal?", isPresented: $showingDeleteGoalAlert) {
+            Button("Delete", role: .destructive) {
+                modelContext.delete(goal)
+                try? modelContext.save()
+                dismiss()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Are you sure you want to delete this goal? This action cannot be undone.")
+        }
         .sheet(isPresented: $showingReminderSettings) {
             ReminderSettingsView(goal: goal)
         }
