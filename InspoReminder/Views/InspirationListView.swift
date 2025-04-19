@@ -79,6 +79,7 @@ struct InspirationCell: View {
                 }
             }
             .frame(width: squareSize, height: squareSize)
+            .padding(.bottom, 18)
             
             HStack {
                 Button(action: { onDelete(inspiration) }) {
@@ -94,6 +95,7 @@ struct InspirationCell: View {
                 }
             }
             .padding(.horizontal)
+            .padding(.bottom, 5)
         }
     }
 }
