@@ -24,12 +24,41 @@ struct GoalOverviewView: View {
                                 Section {
                                     ForEach(goalsInCategory) { goal in
                                         NavigationLink(destination: GoalDetailView(goal: goal)) {
-                                            VStack(alignment: .leading) {
+                                            VStack(alignment: .leading, spacing: 8) {
                                                 Text(goal.title)
                                                     .font(.headline)
                                                 Text(goal.motivation)
                                                     .font(.subheadline)
                                                     .foregroundColor(.gray)
+                                                
+                                                if !goal.inspirations.isEmpty {
+                                                    ScrollView(.horizontal, showsIndicators: false) {
+                                                        HStack(spacing: 10) {
+                                                            ForEach(goal.inspirations) { inspiration in
+                                                                InspirationPreviewView(inspiration: inspiration)
+                                                                    .frame(width: 100, height: 100)
+                                                            }
+                                                        }
+                                                        .padding(.vertical, 5)
+                                                    }
+                                                    .overlay(
+                                                        HStack {
+                                                            LinearGradient(
+                                                                gradient: Gradient(colors: [Color(UIColor.systemBackground), .clear]),
+                                                                startPoint: .leading,
+                                                                endPoint: .trailing
+                                                            )
+                                                            .frame(width: 20)
+                                                            Spacer()
+                                                            LinearGradient(
+                                                                gradient: Gradient(colors: [.clear, Color(UIColor.systemBackground)]),
+                                                                startPoint: .leading,
+                                                                endPoint: .trailing
+                                                            )
+                                                            .frame(width: 20)
+                                                        }
+                                                    )
+                                                }
                                             }
                                         }
                                     }

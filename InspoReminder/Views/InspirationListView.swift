@@ -83,14 +83,14 @@ struct InspirationCell: View {
             HStack {
                 Button(action: { onDelete(inspiration) }) {
                     Image(systemName: "trash")
-                        .foregroundColor(.red)
+                        .foregroundColor(.gray)
                 }
                 
                 Spacer()
                 
                 Button(action: { onFavorite(inspiration) }) {
                     Image(systemName: inspiration.isFavorite ? "heart.fill" : "heart")
-                        .foregroundColor(.red)
+                        .foregroundColor(.gray)
                 }
             }
             .padding(.horizontal)

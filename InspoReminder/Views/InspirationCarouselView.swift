@@ -51,6 +51,23 @@ struct InspirationCarouselView: View {
                 }
                 .frame(height: 200)
                 .background(Color.white)
+                .overlay(
+                    HStack {
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color(UIColor.systemBackground), .clear]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .frame(width: 30)
+                        Spacer()
+                        LinearGradient(
+                            gradient: Gradient(colors: [.clear, Color(UIColor.systemBackground)]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .frame(width: 30)
+                    }
+                )
                 
                 Divider()
                     .padding(.horizontal)

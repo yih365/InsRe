@@ -1,34 +1,44 @@
 # Name
 Jrive - Drive Journal
 Personal motivation coach
+Vision
 
 ## Mission statement
 To be the go-to place for users to fuel their inner fire! It's all about collecting, reflecting on, and being reminded of what inspires them. Think of it as a personal wellspring of motivation.
-
-## Ideas
-### Features
+* It is a smart vision board: includes reminders, structure, and goal-oriented vs inspiration view.
 * This is like a grander vision board with motivations.
-* Users can always add things that motivate and inspire them (add tags to these sources)
-* These items + original goal motivation are used for when motivation is low or lacking
-* Users can choose how often they want to be reminded of an inspiration
-* Categorization of goals for more data points, and potentially community of ppl with similar goals, and then ppl can share their successes and stories, and advice and maybe then a goals with milestones breakdown can be useful.
-* Occasionally, users can receive a push notification to remind them to log their motivation levels in their journal (this is so that the user will always be reminded of their goals and to stay on track with them) (maybe don't need to check in and just remind ppl to look at their motivations)
-* Inspiration challenges: e.g. Mindset monday. something maybe where we prompt the user weekly to be finding new sources of inspo or 
-
-### UI
-* Section for my reasons/motivations (horizontal scroll view)
-* Section for things that inspire (horizontal scroll view)
-* Make it more vision board vibe somehow
-
-### My personal use case as an example
-* Stay inspired to be building things and inspired for my vision of my future (creating and being smth great)
-
-
-## Qs
-* Who is the target audience here? Dreamers, Seekers of Positivity, Creatively Inclined (creative inspiration)
 
 
 ## BUGS
 * Image selection, when image selected blue check needs to stay until it is deselected.
 * Image size exceeding box
+* Add image: cancel button doesnt work and should be at the top left corner of the sheet
+* Inspirations in goal detail page has weird white background
+* Make bg white
+* image cell trash can and heart need to be under image.
 
+
+### Paid features (ask trae)
+* Inspirations of the day/week
+* Inspiration reminders
+* Pay to add more inspirations after a certain point
+* OR: trial type thing and then pay to use at all 
+
+### Must Features
+* For reminder page, include a "-- days hours mins until next reminder" if reminder is set
+* Inspiration of the day/week (choose one inspiration at random from a random goal, the notifs is to remind ppl of the goal itself)
+* Share the spark: Allow users to share their inspirations (sharable collections maybe?)
+* Inspiration challenges: e.g. Mindset monday. something maybe where we prompt the user weekly to be finding new sources of inspo or 
+* Accounts for easier payments in the future. And firebase for storage.
+
+### Could consider features
+* "Inspiration Remix": This could be a fun feature where the app combines different elements of a user's saved inspirations. For example, it could overlay a favorite quote on top of an inspiring image they've uploaded, or create a short audio clip of inspiring words they've saved. This could offer a fresh perspective on their existing content.
+
+### Future features
+* Categorization of goals for more data points, and potentially community of ppl with similar goals, and then ppl can share their successes and stories, and advice and maybe then a goals with milestones breakdown can be useful.
+* Video and audio inspirations
+
+
+
+### My personal use case as an example
+* Stay inspired to be building things and inspired for my vision of my future (creating and being smth great)
