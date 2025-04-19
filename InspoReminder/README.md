@@ -10,12 +10,8 @@ To be the go-to place for users to fuel their inner fire! It's all about collect
 
 
 ## BUGS
-* Image selection, when image selected blue check needs to stay until it is deselected.
-* Image size exceeding box
+* Image exceeding box
 * Add image: cancel button doesnt work and should be at the top left corner of the sheet
-* Inspirations in goal detail page has weird white background
-* Make bg white
-* image cell trash can and heart need to be under image.
 
 
 ### Paid features (ask trae)

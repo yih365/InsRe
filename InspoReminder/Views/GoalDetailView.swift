@@ -236,11 +236,8 @@ struct GoalDetailView: View {
         }
         .sheet(isPresented: $showingImageInput) {
             NavigationView {
-                ImageInspirationView(inspirations: $goal.inspirations)
+                ImageInspirationView(inspirations: $goal.inspirations, isPresented: $showingImageInput)
                     .navigationTitle("Add Image")
-                    .navigationBarItems(trailing: Button("Done") {
-                        showingImageInput = false
-                    })
             }
         }
     }
@@ -249,15 +246,18 @@ struct GoalDetailView: View {
 struct ImageInspirationView: View {
     @Binding var inspirations: [Inspiration]
     @Environment(\.dismiss) private var dismiss
+    @Binding var isPresented: Bool
     
     var body: some View {
         ImagePicker(inspirations: $inspirations)
             .ignoresSafeArea()
-            .onAppear {
-                // Dismiss the view after image is selected
-                if inspirations.last?.type == .image {
-                    dismiss()
-                }
+            .onChange(of: inspirations.count) { _, _ in
+                isPresented = false
+                dismiss()
+            }
+            .onDisappear {
+                isPresented = false
+                dismiss()
             }
     }
 }

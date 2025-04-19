@@ -104,7 +104,7 @@ struct AddGoalView: View {
                 modelContext.insert(goal)
                 dismiss()
             }
-            .disabled(title.isEmpty || motivation.isEmpty)
+                .disabled(title.isEmpty || motivation.isEmpty)
         )
         .sheet(isPresented: $showingTextInput) {
             NavigationView {
@@ -120,7 +120,7 @@ struct AddGoalView: View {
         }
         .sheet(isPresented: $showingImageInput) {
             NavigationView {
-                ImageInspirationView(inspirations: $inspirations)
+                ImageInspirationView(inspirations: $inspirations, isPresented: $showingImageInput)
                     .navigationTitle("Add Image")
                     .navigationBarItems(trailing: Button("Done") {
                         showingImageInput = false
@@ -129,3 +129,5 @@ struct AddGoalView: View {
         }
     }
 }
+
+
