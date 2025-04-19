@@ -10,7 +10,6 @@ To be the go-to place for users to fuel their inner fire! It's all about collect
 
 
 ## BUGS
-* Image exceeding box
 * Add image: cancel button doesnt work and should be at the top left corner of the sheet
 
 

@@ -58,9 +58,11 @@ struct InspirationCell: View {
                             .resizable()
                             .scaledToFill()
                             .frame(width: squareSize, height: squareSize)
+                            .clipped()
                             .padding()
                             .background(Color(UIColor.secondarySystemBackground))
                             .cornerRadius(15)
+                            .contentShape(Rectangle())  // Constrains tap area to visible content
                             .onTapGesture {
                                 showingDetail = true
                             }
