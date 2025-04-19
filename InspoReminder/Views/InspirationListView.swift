@@ -16,7 +16,7 @@ struct InspirationCell: View {
                         .lineLimit(6)
                         .frame(width: squareSize, height: squareSize)
                         .padding()
-                        .background(Color.gray.opacity(0.1))
+                        .background(Color(UIColor.secondarySystemBackground))
                         .cornerRadius(15)
                         .onTapGesture {
                             showingDetail = true
@@ -41,14 +41,14 @@ struct InspirationCell: View {
                                 .lineLimit(2)
                                 .frame(width: squareSize, height: squareSize)
                                 .padding()
-                                .background(Color.blue.opacity(0.1))
+                                .background(Color(UIColor.secondarySystemBackground))
                                 .cornerRadius(15)
                         }
                     } else {
                         Text("Invalid URL")
                             .frame(width: squareSize, height: squareSize)
                             .padding()
-                            .background(Color.red.opacity(0.1))
+                            .background(Color(UIColor.secondarySystemBackground))
                             .cornerRadius(15)
                     }
                 case .image:
@@ -59,7 +59,7 @@ struct InspirationCell: View {
                             .scaledToFill()
                             .frame(width: squareSize, height: squareSize)
                             .padding()
-                            .background(Color.white)
+                            .background(Color(UIColor.secondarySystemBackground))
                             .cornerRadius(15)
                             .onTapGesture {
                                 showingDetail = true

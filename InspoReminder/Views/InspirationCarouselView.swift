@@ -50,7 +50,7 @@ struct InspirationCarouselView: View {
                     .padding(.horizontal)
                 }
                 .frame(height: 200)
-                .background(Color.white)
+                .background(Color(UIColor.systemBackground))
                 .overlay(
                     HStack {
                         LinearGradient(

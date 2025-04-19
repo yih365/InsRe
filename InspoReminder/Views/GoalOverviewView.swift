@@ -66,12 +66,12 @@ struct GoalOverviewView: View {
                                     HStack {
                                         Text(category.rawValue)
                                             .font(.headline)
-                                            .foregroundColor(.white)
+                                            .foregroundColor(Color(UIColor.systemBackground))
                                         Spacer()
                                     }
                                     .padding(.vertical, 8)
                                     .padding(.horizontal)
-                                    .background(Color.black)
+                                    .background(Color(UIColor.label))
                                     .listRowInsets(EdgeInsets())
                                 }
                                 .listSectionSeparator(.hidden)

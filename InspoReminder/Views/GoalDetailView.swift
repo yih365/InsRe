@@ -67,7 +67,6 @@ struct GoalDetailView: View {
                                 .frame(width: 100)
                             }
                             .padding(.horizontal, 20)
-                            .background(Color.white)
                             
                             switch inspirationViewMode {
                             case .grid:
