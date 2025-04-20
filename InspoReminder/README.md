@@ -11,6 +11,7 @@ To be the go-to place for users to fuel their inner fire! It's all about collect
 
 ## BUGS
 * Add image: cancel button doesnt work and should be at the top left corner of the sheet
+* In reminder page, "-- days hours mins until next reminder" not correct
 
 
 ### Paid features (ask trae)
@@ -20,11 +21,10 @@ To be the go-to place for users to fuel their inner fire! It's all about collect
 * OR: trial type thing and then pay to use at all 
 
 ### Must Features
-* For reminder page, include a "-- days hours mins until next reminder" if reminder is set
-* Inspiration of the day/week (choose one inspiration at random from a random goal, the notifs is to remind ppl of the goal itself)
-* Share the spark: Allow users to share their inspirations (sharable collections maybe?)
 * Inspiration challenges: e.g. Mindset monday. something maybe where we prompt the user weekly to be finding new sources of inspo or 
+* Share the spark: Allow users to share their inspirations (sharable collections maybe?)
 * Accounts for easier payments in the future. And firebase for storage.
+* Inspiration of the day/week (choose one inspiration at random from a random goal, the notifs is to remind ppl of the goal itself)
 
 ### Could consider features
 * "Inspiration Remix": This could be a fun feature where the app combines different elements of a user's saved inspirations. For example, it could overlay a favorite quote on top of an inspiring image they've uploaded, or create a short audio clip of inspiring words they've saved. This could offer a fresh perspective on their existing content.

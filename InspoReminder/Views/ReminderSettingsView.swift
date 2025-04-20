@@ -6,6 +6,8 @@ struct ReminderSettingsView: View {
     @Bindable var goal: Goal
     @State private var interval: String
     @State private var selectedUnit: Goal.ReminderUnit
+    @State private var nextReminderText: String = "No reminder set"
+    @State private var notificationStatus: String = ""  // Add this line
     
     init(goal: Goal) {
         self.goal = goal
@@ -32,6 +34,11 @@ struct ReminderSettingsView: View {
                         .pickerStyle(.segmented)
                     }
                 }
+                
+                Section {
+                    Text(nextReminderText)
+                        .foregroundColor(.secondary)
+                }
             }
             .navigationTitle("Reminder Settings")
             .navigationBarItems(
@@ -47,26 +54,61 @@ struct ReminderSettingsView: View {
                 .disabled(interval.isEmpty)
             )
         }
+        .onAppear {
+            updateNextReminderText()
+        }
+    }
+    
+    private func updateNextReminderText() {
+        guard let interval = goal.reminderInterval else {
+            nextReminderText = "No reminder set"
+            return
+        }
+        
+        let intervalInSeconds: TimeInterval = {
+            if goal.reminderUnit == .weeks {
+                return Double(interval) * 7 * 24 * 60 * 60
+            } else {
+                return Double(interval) * 24 * 60 * 60
+            }
+        }()
+        
+        let now = Date()
+        let lastSet = goal.lastReminderDate ?? now
+        let timeElapsed = now.timeIntervalSince(lastSet)
+        let remainingTime = intervalInSeconds - timeElapsed.truncatingRemainder(dividingBy: intervalInSeconds)
+        
+        let components = Calendar.current.dateComponents(
+            [.day, .hour, .minute],
+            from: now,
+            to: now.addingTimeInterval(remainingTime)
+        )
+        
+        nextReminderText = "\(components.day ?? 0) days \(components.hour ?? 0) hours \(components.minute ?? 0) mins until next reminder"
     }
     
     private func scheduleNotifications(for goal: Goal) {
         let center = UNUserNotificationCenter.current()
         
-        // Request permission
         center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
-            guard granted else { return }
+            guard granted else {
+                DispatchQueue.main.async {
+                    notificationStatus = "Notifications permission denied"
+                }
+                return
+            }
             
-            // Remove existing notifications for this goal
             let identifier = String(describing: goal.persistentModelID)
             center.removePendingNotificationRequests(withIdentifiers: [identifier])
             
-            // Calculate interval in seconds
-            let intervalInSeconds: Double
-            if goal.reminderUnit == .weeks {
-                intervalInSeconds = Double(goal.reminderInterval ?? 0) * 7 * 24 * 60 * 60
-            } else {
-                intervalInSeconds = Double(goal.reminderInterval ?? 0) * 24 * 60 * 60
-            }
+            // Schedule recurring notification
+            let intervalInSeconds: Double = {
+                if goal.reminderUnit == .weeks {
+                    return Double(goal.reminderInterval ?? 0) * 7 * 24 * 60 * 60
+                } else {
+                    return Double(goal.reminderInterval ?? 0) * 24 * 60 * 60
+                }
+            }()
             
             let content = UNMutableNotificationContent()
             content.title = "Goal Reminder: \(goal.title)"
@@ -83,7 +125,16 @@ struct ReminderSettingsView: View {
                 trigger: trigger
             )
             
-            center.add(request)
+            center.add(request) { error in
+                if let error = error {
+                    print("Error scheduling notification: \(error)")
+                } else {
+                    DispatchQueue.main.async {
+                        goal.lastReminderDate = Date()
+                        updateNextReminderText()
+                    }
+                }
+            }
         }
     }
 }
