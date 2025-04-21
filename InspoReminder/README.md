@@ -14,14 +14,13 @@ To be the go-to place for users to fuel their inner fire! It's all about collect
 * In reminder page, "-- days hours mins until next reminder" not correct
 
 
-### Paid features (ask trae)
-* Inspirations of the day/week
-* Inspiration reminders
-* Pay to add more inspirations after a certain point
-* OR: trial type thing and then pay to use at all 
+## Paid: AI Features (Something AI is good at is being a yes man)
+* AI motivational speech generation
+* AI text to inspirational sounding audio generation
+
 
 ### Must Features
-* Inspiration challenges: e.g. Mindset monday. something maybe where we prompt the user weekly to be finding new sources of inspo or 
+******** COMMUNITY INSPIRATIONS (SORT BY CATEGORY), users can share theirs by pressing shared vs not shared button on the inspiration, default is non-shared (YES AND we can get users through reddit and other platforms for driven ppl)
 * Share the spark: Allow users to share their inspirations (sharable collections maybe?)
 * Accounts for easier payments in the future. And firebase for storage.
 * Inspiration of the day/week (choose one inspiration at random from a random goal, the notifs is to remind ppl of the goal itself)
@@ -32,6 +31,7 @@ To be the go-to place for users to fuel their inner fire! It's all about collect
 ### Future features
 * Categorization of goals for more data points, and potentially community of ppl with similar goals, and then ppl can share their successes and stories, and advice and maybe then a goals with milestones breakdown can be useful.
 * Video and audio inspirations
+* Given these motivations, ai generate some new motivations?
 
 
 
